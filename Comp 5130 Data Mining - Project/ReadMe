@@ -5,7 +5,7 @@ This project focuses on analyzing large graph datasets and performing link predi
 
 We use real-world datasets, extract graph-based features, and train a classification model to distinguish between existing and non-existing links.
 
----
+```
 
 ## Datasets
 
