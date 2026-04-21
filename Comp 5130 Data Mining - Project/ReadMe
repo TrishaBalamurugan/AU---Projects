@@ -1,0 +1,148 @@
+# Graph Link Prediction Project
+
+## Overview
+This project focuses on analyzing large graph datasets and performing link prediction using machine learning. The goal is to determine whether a connection (edge) between two nodes is likely to exist based on structural properties of the graph.
+
+We use real-world datasets, extract graph-based features, and train a classification model to distinguish between existing and non-existing links.
+
+---
+
+## Datasets
+
+The following datasets are used:
+
+- CA-GrQc.txt (Directed co-authorship network)
+- com-dblp.ungraph.txt (Undirected collaboration network)
+
+### File Setup
+
+If using Google Colab, update file paths:
+
+```python
+FILE1 = "/content/drive/MyDrive/.../CA-GrQc.txt"
+FILE2 = "/content/drive/MyDrive/.../com-dblp.ungraph.txt"
+
+## Mount Google Drive:
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+If running locally, comment out the above lines and provide local file paths.
+
+## Installation
+
+Install required Python libraries:
+
+pip install pandas numpy networkx scipy matplotlib scikit-learn
+## How to Run
+Place dataset files in the correct directory
+Update file paths in the script or notebook
+Run the code in order:
+Load graphs
+Analyze graph structure
+Generate features
+Train model
+Evaluate performance
+
+## Methodology
+Graph Construction
+Load edge lists into NetworkX graphs
+Support for both directed and undirected graphs
+Edge weights represent repeated connections
+
+## Graph Analysis
+
+We compute:
+
+Number of nodes and edges
+Degree distributions
+Connected components
+Clustering coefficient
+PageRank
+Community detection using label propagation
+
+## Feature Engineering
+
+For each pair of nodes (u, v), the following features are computed:
+
+Common Neighbors: Number of shared neighbors
+Jaccard Coefficient: Ratio of shared neighbors to total neighbors
+Adamic-Adar Index: Weighted importance of shared neighbors
+Preferential Attachment: Product of node degrees
+Same Community: Whether both nodes belong to the same detected community
+Degree Features: In-degree and out-degree of nodes
+
+## Negative Sampling
+
+The dataset only contains existing edges (positive samples). To create a balanced dataset:
+
+Positive samples: Existing edges
+
+Negative samples: Randomly generated node pairs with no edge
+
+This converts the problem into a binary classification task.
+
+## Model Training
+
+We use the following model:
+
+Gaussian Naive Bayes
+
+Steps:
+
+Split dataset into training and testing sets (80/20)
+Train the model on extracted features
+Predict link existence on test data
+
+## Evaluation Metrics
+
+The model is evaluated using:
+
+Accuracy
+Precision
+Recall
+F1 Score
+ROC-AUC
+PR-AUC
+Log Loss
+Brier Score
+Matthews Correlation Coefficient (MCC)
+Cohen’s Kappa
+Balanced Accuracy
+NDCG (Normalized Discounted Cumulative Gain)
+Precision@K
+
+## Visualizations
+
+The following plots are generated:
+
+Degree distribution histograms
+Component size distributions
+Confusion matrix
+ROC curve
+Precision-Recall curve
+Calibration curve
+
+## Results
+
+The model predicts whether a link exists between two nodes based on graph-derived features. Performance varies depending on the dataset and feature effectiveness.
+
+## Limitations
+Negative samples are randomly generated and may not represent realistic non-links
+Gaussian Naive Bayes assumes feature independence
+Real-world graphs are highly imbalanced, but this project uses a balanced dataset
+Possible data leakage if edges are not split before feature computation
+
+## Future Improvements
+Use more advanced models:
+Logistic Regression
+Random Forest
+Gradient Boosting (XGBoost)
+Improve negative sampling strategies:
+Hard negative sampling
+Distance-based sampling
+Perform proper edge-based train/test split
+Add more features:
+Shortest path distance
+Katz index
+Node embeddings (Node2Vec)
